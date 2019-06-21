@@ -1,5 +1,7 @@
 // Import the discord.js module
 const Discord = require('discord.js');
+// Import the command handler
+const commands = require('./commands.js');
 
 // Create an instance of a Discord client
 const client = new Discord.Client();

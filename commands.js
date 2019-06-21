@@ -64,3 +64,82 @@ function userAuthLevel(message){
       return 0;
     }
   }
+
+/**
+ * Returns the bot's ping and the sender's ping
+ * @param {discord.Message} message Message object
+ * @returns {string} string containing the two pings
+ */
+function ping(message){
+    return "API response time: " + bot.client.ping + "ms\n`" + message.author.username + "`'s response time: " + message.author.client.ping + "ms";
+}
+
+/**
+ * Returns an embed with bot statistics
+ * @returns {object} embed with stats
+ */
+function stats(){
+    //calculate uptime
+    var diff = bot.client.uptime;
+    var s = Math.floor(diff / 1000);
+    var  m = Math.floor(s / 60);
+    s = s % 60;
+    var h = Math.floor(m / 60);
+    m = m % 60;
+    var d = Math.floor(h / 24);
+    h = h % 24;
+    return {embed: {
+      color: 0x00AE86,
+      author: {
+        name: bot.client.user.username,
+        icon_url: (bot.client.user.avatarURL !=undefined)? bot.client.user.avatarURL : bot.client.user.defaultAvatarURL
+      },
+      title: "**" + bot.client.user.username + "** Statistics",
+      fields: [
+        {
+          name: "Ping",
+          value: "API response time: " + bot.client.ping + " ms"
+        },
+        {
+          name: "Total Servers:",
+          value: "Servers: " + bot.client.guilds.size
+        },
+        {
+          name: "Uptime",
+          value: "Uptime: " + d + " days " + h + " hours " + m + " minutes " + s + " seconds\nTotal Miliseconds: " + diff
+        }
+      ],
+      timestamp: new Date(),
+      footer: {
+        icon_url: bot.client.user.avatarURL,
+        text: "© RavbugAnimations"
+      }
+    }
+  };
+}
+
+
+/**
+ * Shuts down the bot
+ * @param {discord.Message} message Message object (not used)
+ */
+function restart(message){
+    console.error("//restart issued, stopping");
+    message.channel.send(":repeat: Restarting...").then(function(){ process.exit(0);});
+    return ":repeat: Restarting...";
+}
+
+/**
+ * @returns A string and a URL to the bot's webpage
+ */
+function about(){
+  return "Visit this URL to get information about the bot: https://poetrybot.glitch.me/";
+}
+
+/**
+ * Update the &permissions query flag to add or remove permissions
+ * @returns A URL to the bot, with suggested permissions
+ */
+function invite(){
+  return "Invite link: https://discordapp.com/oauth2/authorize?client_id=" + bot.client.user.id + "&scope=bot&permissions=68608"
+}

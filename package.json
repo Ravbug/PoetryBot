@@ -12,7 +12,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "discord.js": "^11.5.0",
-    "xhr2": "^0.1.4",
+    "xhr2": "^0.1.4"
   },
   "engines": {
     "node": "8.x"
