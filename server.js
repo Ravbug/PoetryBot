@@ -4,6 +4,7 @@
 // init project
 const express = require('express');
 const app = express();
+const bot = require('./bot.js');
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
