@@ -13,6 +13,7 @@
     "discord.js": "^11.5.0",
     "express": "^4.16.4",
     "jsdom": "^15.1.1",
+    "weighted-random": "^0.1.0",
     "xhr2": "^0.1.4"
   },
   "engines": {

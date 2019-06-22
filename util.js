@@ -102,3 +102,21 @@ function getRandom(min, max){
 	return parseInt(Math.random() * (max-min) + min);
 }
 exports.getRandom = getRandom;
+
+/** 
+ * @param {string} str string to process
+ * @returns {string} `str` without punctuation symbols
+ */
+function removePunctuation(str){
+  //remove punctuation
+   return str.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\"']/g,"");
+}
+exports.removePunctuation=removePunctuation;
+
+
+function toCapitalCase(str) {
+  return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
+exports.toCapitalCase = toCapitalCase;

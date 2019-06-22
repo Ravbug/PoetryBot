@@ -1,6 +1,7 @@
 const util = require('./util.js');
 const Readability = require('./Readability.js');
 const countedSet = require('./countedSet.js');
+const weightedRandom = require('weighted-random');
 
 //webpage data cache, to avoid loading the same URL multiple times
 //structure: {"url":[model,size,last_access_time]}
@@ -10,9 +11,11 @@ let current_cache_size = 0;
 
 /**
  * Generates a poem using text on a webpage
- * @param {string} url 
+ * @param {string} url webpage to use as a model for how to write
+ * @param {string} startword Optional starting word for the poem
+ * @returns {string} the resulting poem
  */
-async function poem(url){
+async function poem(url,startword){
     let model;
     //does the cache already have this url loaded?
     if (cache.hasOwnProperty(url)){
@@ -27,17 +30,23 @@ async function poem(url){
 
         let article = new Readability(dom.window.document).parse();
 
-        //Train the brain (single word mode, forward only)
+        //Train the brain (single word mode, forward only)  
         model = makeModel(article.textContent);
         addToCache(url,model,article.textContent.length);
     }
 
-   
     //Select a starting word
-    return util.randomElement(Object.keys(model));
-
+    startword = util.randomElement(Object.keys(model));
     //Generate max 7 word lines, each pair of lines begins with the last word of the previous line (max 4 pairs / 8 lines)
-
+    let poem = ['**',util.toCapitalCase(from(startword,model,3)),'**\n\n'];
+    let numLines = util.getRandom(3,7);
+    for (let i = 0; i < numLines; i++){
+        let line = from(startword,model, util.getRandom(3,12));
+        poem.push(line);
+        poem.push('\n');
+        startword = util.randomElement(line.split(' '));
+    }
+    return poem.join(' ');
 }
 exports.poem = poem;
 
@@ -51,20 +60,6 @@ exports.poem = poem;
 function from(start,model,maxWords=7){
     let sentence = [];
     let i = 0;
-
-    //check if end is a single word
-    if (!start.includes(' ')){
-        start = start.toLowerCase();
-        let n = nextWord(util.removePunctuation(start),model);
-        if (n != undefined){
-            start = [start,n].join(' ');
-            sentence.push(n);
-        }
-        //if nothing found, stop here
-        else{
-            return sentence;
-        }
-    }
 
     let next = start;
     while (i < maxWords){
