@@ -1,4 +1,6 @@
 const XMLHttpRequest = require('xhr2');
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
 //utility function to replace all instances of toReplace with replaceWith in the orig string.
 function replaceAll(orig,toReplace,replaceWith){
@@ -41,3 +43,62 @@ function httpGetAsync(theUrl)
     });
 }
 exports.httpGetAsync = httpGetAsync;
+
+
+/**
+ * Loads a URL and returns a JSDOM object
+ * @param {string} url: URL to fetch
+ */
+function urlToDOM(url){
+  return new Promise(async function(resolve,reject){
+      try{
+      var data = await httpGetAsync(url);
+      }
+      catch(e){reject()}
+      //convert to a DOM
+      resolve(new JSDOM(data));
+  });
+}
+exports.urlToDOM = urlToDOM;
+
+/**
+ * Replaces tabs, newlines, or repeated spaces with a single space
+ * @param {string} text Text to process
+ * @returns {string} Text with all whitespace characters converted to a single space
+ */
+function removeRecurrentWhitespace(text){
+  return text.replace(/  +|\t|\n/g,' ').replace(/  +/g, ' ').trim();
+}
+exports.removeRecurrentWhitespace = removeRecurrentWhitespace;
+
+
+/**
+ * Replaces tabs and repeated spaces with a single space
+ * Replaces repeated newlines with a single newline
+ * @param {string} text Text to process
+ * @returns {string} 
+ */
+function fixDuplicatedWhitespace(text){
+  return text.replace(/  +|\t+/g,' ').replace(/\n+/g,'\n').replace(/  +/g, ' ').trim();
+}
+exports.fixDuplicatedWhitespace = fixDuplicatedWhitespace;
+
+/**
+ * Returns a random element of an array
+ * @param {array} arr: array to get element
+ */
+function randomElement(arr,start=0){
+  let i = getRandom(start,arr.length);
+  return arr[i];
+}
+exports.randomElement = randomElement;
+
+/**
+  * Returns a random number between min and max
+  * @param {number} min the low bound for random
+  * @param {number} max the high bound for random
+  */
+function getRandom(min, max){
+	return parseInt(Math.random() * (max-min) + min);
+}
+exports.getRandom = getRandom;

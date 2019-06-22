@@ -2,10 +2,11 @@
 const Discord = require('discord.js');
 // Import the command handler
 const commands = require('./commands.js');
+const util = require('./util.js');
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
-
+exports.client = client;
 /**
  * The ready event is vital, it means that only _after_ this will your bot start reacting to information
  * received from Discord
@@ -19,23 +20,20 @@ client.on('ready', () => {
 
 
 // Create an event listener for messages
-client.on('message', message => {
+client.on('message', async function(message){
   //don't respond to other bots (or self)
   if (message.author.bot){
     return;
   }
   
-  // If the message contains the bot's tag (or simple ID)
-  if (message.content.includes(client.user.id)) {
+  // if channel is a DM, or If the message contains the bot's tag (or simple ID), and current channel has send messages permissions
+  if (message.channel.type === 'dm' || (message.content.includes(client.user.id && message.channel.permissionsFor(client.user.id).has("SEND_MESSAGES")))) {
     
-    //check current channel for send messages permissions, if they are not present, then don't process input
-    if (!message.channel.permissionsFor(client.user.id).has("SEND_MESSAGES")){
-      return;
-    }
-    
-    //remove the bot's tag 
+    //remove the bot's tag
+    let content = util.eraseBotTag(message.content,client.user.id);
     //process commands
-    message.channel.send('pong');
+    let response = await commands.run(message,content);
+    message.channel.send(response);
   }
 });
 
