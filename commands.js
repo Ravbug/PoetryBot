@@ -143,3 +143,7 @@ function about(){
 function invite(){
   return "Invite link: https://discordapp.com/oauth2/authorize?client_id=" + bot.client.user.id + "&scope=bot&permissions=68608"
 }
+
+function help(){
+  return "Will fill"
+}
