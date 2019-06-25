@@ -10,7 +10,7 @@ const functions = {
     "stats":{f:stats}, "help":{f:help}, "":{f:help},
     "about":{f:about},
     "invite":{f:invite},
-    "poem":{f:poem}
+    "poem":{f:poem},"purgecaches":{f:purgecaches,level:2}
 }
 
 
@@ -148,10 +148,22 @@ function invite(){
 }
 
 function help(){
-  return "Will fill"
+  const embed = new discord.RichEmbed()
+    .setTitle(bot.client.user.username + " Commands")
+    .setColor(0x00AEFF)
+    .setDescription(" Exclude [ or ] from your message.")
+    .setThumbnail((bot.client.user.avatarURL !=undefined)? bot.client.user.avatarURL : bot.client.user.defaultAvatarURL)
+    .setTimestamp()
+    .addField("poem [url]","Generate a unique poem based on the text on a webpage.",true)
+    .addField("invite","Get an invite link for the bot.",true)
+    .addField("help","Display this information",true)
+    .addField("about","Get info about the bot",true)
+    .addField("ping","Get the bot's API ping.",true)
+    .addField("stats","Get bot statistics",true)
+    return embed;
 }
 
-const poemQueue = new Set();
+let poemQueue = new Set();
 
 /**
  * Generates a poem with a given url
@@ -174,4 +186,13 @@ async function poem(message,content){
     poemQueue.delete(message.author.id);
     return [":x: <@",message.author.id,"> Unable to generate poem using url <", content[0],">. Check your spelling or try another URL. `http://` is required for urls."].join('');
   }
+}
+
+/**
+ * Purges cached data in poemQueue and the poetry model cache 
+ */
+function purgecaches(){
+  poetry.cache = {};
+  poemQueue = new Set();
+  return ":white_check_mark: Reset poem model cache and poem queue";
 }

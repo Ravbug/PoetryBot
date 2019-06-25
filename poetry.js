@@ -11,9 +11,11 @@ String.prototype.capitalize = function() {
 
 //webpage data cache, to avoid loading the same URL multiple times
 //structure: {"url":[model,size,last_access_time]}
-const cache = {}; 
+let cache = {}; 
 const max_cache_size = 50000000;
 let current_cache_size = 0;
+
+exports.cache = cache;
 
 /**
  * Generates a poem using text on a webpage
