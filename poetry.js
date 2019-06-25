@@ -23,7 +23,7 @@ exports.cache = cache;
  * @param {string} startword Optional starting word for the poem
  * @returns {string} the resulting poem
  */
-async function poem(url,startword){
+async function poem(url,startword,max_tries=5){
     let model;
     //does the cache already have this url loaded?
     if (cache.hasOwnProperty(url)){
@@ -46,14 +46,21 @@ async function poem(url,startword){
     //Select a starting word
     startword = util.randomElement(Object.keys(model));
     //Generate max 7 word lines, each pair of lines begins with the last word of the previous line (max 4 pairs / 8 lines)
-    let poem = ['**\"',util.toCapitalCase(from(startword,model,3)),'\"**\n\n'];
+    let title = util.toCapitalCase(from(startword,model,3));
+    let poem = ['**\"',title,'\"**\n\n'];
     let numLines = util.getRandom(3,7);
+    let prevLine = title.split(' ');
     for (let i = 0; i < numLines; i++){
-        let line = util.removeRecurrentWhitespace(from(startword,model, util.getRandom(3,12))).capitalize();
+        let line = "";
+        for (let i = 0; i < max_tries && line == ""; i++){
+            line = util.removeRecurrentWhitespace(from(startword,model, util.getRandom(3,12))).capitalize();
+            startword = util.randomElement(prevLine);
+        }
         if (line == ""){break;};
         poem.push(['*',line,'*'].join(''));
         poem.push('\n');
-        startword = util.randomElement(line.split(' '));
+        prevLine = line.split(' ');
+        startword = util.randomElement(prevLine);
     }
     //join the poem array, and replace duplicate newlines with a single newline
     return poem.join(' ');
