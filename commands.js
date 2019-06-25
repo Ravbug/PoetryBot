@@ -166,7 +166,12 @@ async function poem(message,content){
   poemQueue.add(message.author.id);
 
   //attempt to load the webpage, but abort if it takes longer than 5 seconds
-  let poem = await util.asyncTimeout(5000,poetry.poem(content[0]));
-  poemQueue.delete(message.author.id);
-  return [poem,"\n\nRequested by <@",message.author.id,">, using <",content[0],">"].join('');
+  try{
+    let poem = await util.asyncTimeout(5000,poetry.poem(content[0]));
+    poemQueue.delete(message.author.id);
+    return [poem,"\n\nRequested by <@",message.author.id,">, using <",content[0],">"].join('');
+  }catch(e){
+    poemQueue.delete(message.author.id);
+    return [":x: <@",message.author.id,"> Unable to generate poem using url <", content[0],">. Check your spelling or try another URL. `http://` is required for urls."].join('');
+  }
 }
