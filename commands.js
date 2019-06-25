@@ -154,7 +154,7 @@ function help(){
     .setDescription(" Exclude [ or ] from your message.")
     .setThumbnail((bot.client.user.avatarURL !=undefined)? bot.client.user.avatarURL : bot.client.user.defaultAvatarURL)
     .setTimestamp()
-    .addField("poem [url]","Generate a unique poem based on the text on a webpage.",true)
+    .addField("poem [url]","Generate a unique poem based on the text on a webpage.\nUrban Dictionary pages or websites with lots of text work well for this.",true)
     .addField("invite","Get an invite link for the bot.",true)
     .addField("help","Display this information",true)
     .addField("about","Get info about the bot",true)
@@ -179,7 +179,7 @@ async function poem(message,content){
 
   //attempt to load the webpage, but abort if it takes longer than 5 seconds
   try{
-    let poem = await util.asyncTimeout(5000,poetry.poem(content[0]));
+    let poem = await util.asyncTimeout(10000,poetry.poem(content[0]));
     poemQueue.delete(message.author.id);
     return [poem,"\n\nRequested by <@",message.author.id,">, using <",content[0],">"].join('');
   }catch(e){

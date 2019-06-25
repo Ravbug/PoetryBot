@@ -23,7 +23,7 @@ exports.cache = cache;
  * @param {string} startword Optional starting word for the poem
  * @returns {string} the resulting poem
  */
-async function poem(url,startword,max_tries=5){
+async function poem(url,startword,max_tries=10){
     let model;
     //does the cache already have this url loaded?
     if (cache.hasOwnProperty(url)){
