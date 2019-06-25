@@ -184,7 +184,7 @@ async function poem(message,content){
     return [poem,"\n\nRequested by <@",message.author.id,">, using <",content[0],">"].join('');
   }catch(e){
     poemQueue.delete(message.author.id);
-    return [":x: <@",message.author.id,"> Unable to generate poem using url <", content[0],">. Check your spelling or try another URL. `http://` is required for urls."].join('');
+    return [":x: <@",message.author.id,"> Unable to generate poem using url <", content[0],">. Check your spelling or try another URL. `http://` or `https://` is required for urls."].join('');
   }
 }
 
