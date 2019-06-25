@@ -54,7 +54,7 @@ function urlToDOM(url){
       try{
       var data = await httpGetAsync(url);
       }
-      catch(e){reject()}
+      catch(e){reject(e)}
       //convert to a DOM
       resolve(new JSDOM(data));
   });
@@ -113,10 +113,33 @@ function removePunctuation(str){
 }
 exports.removePunctuation=removePunctuation;
 
-
+/**
+ * Converts a string to Capital Case
+ * @param {string} str string to capitalize
+ * @returns {string} the capitalized string 
+ */
 function toCapitalCase(str) {
   return str.replace(/\w\S*/g, function(txt){
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
 exports.toCapitalCase = toCapitalCase;
+
+/**
+ * Executes a promise with a timeout
+ * @param {number} ms Amount of time to wait for the promise
+ * @param {Promise} promise 
+ */
+function asyncTimeout(ms,promise){
+  // Create a promise that rejects in `ms` milliseconds
+  let timeout = new Promise(function(resolve, reject){
+    let id = setTimeout(() => {
+      clearTimeout(id);
+      reject('Timed out in '+ ms + 'ms.')
+    }, ms);
+  });
+
+  // Returns a race between timeout and the passed promise
+  return Promise.race([promise,timeout]);
+}
+exports.asyncTimeout = asyncTimeout;

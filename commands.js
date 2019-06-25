@@ -1,6 +1,7 @@
 const bot = require('./bot.js')
 const discord = require("discord.js");
 const poetry = require('./poetry.js');
+const util = require('./util.js');
 
 //a table of executable functions and their triggers
 // 'help' runs with either the string "help" or with no string
@@ -150,12 +151,22 @@ function help(){
   return "Will fill"
 }
 
+const poemQueue = new Set();
+
 /**
  * Generates a poem with a given url
  * @param {discord.Message} message Caller's message object
  * @param {string[]} content [0] = webpage url 
  */
 async function poem(message,content){
-  //sanity check input
-  return await poetry.poem(content[0]);
+  //has this user already requested a poem?
+  if (poemQueue.has(message.author.id)){
+    return ["<@",message.author.id,"> You must wait for your previous request to complete."].join('');
+  }
+  poemQueue.add(message.author.id);
+
+  //attempt to load the webpage, but abort if it takes longer than 5 seconds
+  let poem = await util.asyncTimeout(5000,poetry.poem(content[0]));
+  poemQueue.delete(message.author.id);
+  return [poem,"\n\nRequested by <@",message.author.id,">, using <",content[0],">"].join('');
 }

@@ -27,7 +27,7 @@ client.on('message', async function(message){
   }
   
   // if channel is a DM, or If the message contains the bot's tag (or simple ID), and current channel has send messages permissions
-  if (message.channel.type === 'dm' || (message.content.includes(client.user.id && message.channel.permissionsFor(client.user.id).has("SEND_MESSAGES")))) {
+  if (message.channel.type === 'dm' || (message.content.includes(client.user.id) && message.channel.permissionsFor(client.user.id).has("SEND_MESSAGES"))) {
     
     //remove the bot's tag
     let content = util.eraseBotTag(message.content,client.user.id);
