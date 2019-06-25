@@ -3,6 +3,12 @@ const Readability = require('./Readability.js');
 const countedSet = require('./countedSet.js');
 const weightedRandom = require('weighted-random');
 
+//add a string method for capitalizing the first letter
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1)
+  }
+  
+
 //webpage data cache, to avoid loading the same URL multiple times
 //structure: {"url":[model,size,last_access_time]}
 const cache = {}; 
@@ -38,14 +44,16 @@ async function poem(url,startword){
     //Select a starting word
     startword = util.randomElement(Object.keys(model));
     //Generate max 7 word lines, each pair of lines begins with the last word of the previous line (max 4 pairs / 8 lines)
-    let poem = ['**',util.toCapitalCase(from(startword,model,3)),'**\n\n'];
+    let poem = ['**\"',util.toCapitalCase(from(startword,model,3)),'\"**\n\n'];
     let numLines = util.getRandom(3,7);
     for (let i = 0; i < numLines; i++){
-        let line = from(startword,model, util.getRandom(3,12));
-        poem.push(line);
+        let line = util.removeRecurrentWhitespace(from(startword,model, util.getRandom(3,12))).capitalize();
+        if (line == ""){break;};
+        poem.push(['*',line,'*'].join(''));
         poem.push('\n');
         startword = util.randomElement(line.split(' '));
     }
+    //join the poem array, and replace duplicate newlines with a single newline
     return poem.join(' ');
 }
 exports.poem = poem;
