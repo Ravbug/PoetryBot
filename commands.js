@@ -9,7 +9,8 @@ const functions = {
     "ping":{f:ping},"restart":{f:restart,level:2},
     "stats":{f:stats}, "help":{f:help}, "":{f:help},
     "invite":{f:invite},
-    "poem":{f:poem},"purgecaches":{f:purgecaches,level:2}
+    "poem":{f:poem},"purgecaches":{f:purgecaches,level:2},
+    "poemsearch":{f:poemsearch}
 }
 
 
@@ -169,19 +170,43 @@ let poemQueue = new Set();
 async function poem(message,content){
   //has this user already requested a poem?
   if (poemQueue.has(message.author.id)){
+    message.react("❌");
     return ["<@",message.author.id,"> You must wait for your previous request to complete."].join('');
   }
   poemQueue.add(message.author.id);
-
+  message.react("⏳");
   //attempt to load the webpage, but abort if it takes longer than 5 seconds
   try{
     let poem = await util.asyncTimeout(10000,poetry.poem(content[0]));
     poemQueue.delete(message.author.id);
+    message.react("✅");
     return [poem,"\n\nRequested by <@",message.author.id,">, using <",content[0],">"].join('');
   }catch(e){
     poemQueue.delete(message.author.id);
+    message.react("❌");
     return [":x: <@",message.author.id,"> Unable to generate poem using url <", content[0],">. Check your spelling or try another URL. `http://` or `https://` is required for urls."].join('');
   }
+}
+
+let searchQueue = new Set();
+
+/**
+ * Generates a poem with a given url
+ * @param {discord.Message} message Caller's message object
+ * @param {string[]} content [0] = webpage url 
+ */
+async function poemsearch(message,content){
+  if (poemQueue.has(message.author.id) || searchQueue.has(message.author.id)){
+    message.react("❌");
+    return ["<@",message.author.id,"> You must wait for your previous request to complete."].join('');
+  }
+  message.react('🔍');
+  searchQueue.add(message.author.id);
+  let urls = await util.getURLS(content.join(' '));
+  let url = util.randomElement(urls);
+  let text = await poem(message,[url]);
+  searchQueue.delete(message.author.id);
+  return text;
 }
 
 /**
@@ -190,5 +215,6 @@ async function poem(message,content){
 function purgecaches(){
   poetry.cache = {};
   poemQueue = new Set();
-  return ":white_check_mark: Reset poem model cache and poem queue";
+  searchQueue = new Set();
+  return ":white_check_mark: Reset poem model cache and queues";
 }

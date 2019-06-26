@@ -143,3 +143,33 @@ function asyncTimeout(ms,promise){
   return Promise.race([promise,timeout]);
 }
 exports.asyncTimeout = asyncTimeout;
+
+
+/**
+ * Returns the URLs from a google search result
+ * @param {string} question: question to search google
+ * @returns {Promise<string[]>}: array of strings containing the URLs
+ */
+function getURLS(question){
+  return new Promise(async function(resolve,reject){
+      //load the URL
+      const url = "https://google.com/search?q="+question;
+      let dom = await urlToDOM(url);       
+      //get the green <a> elements displayed on the page
+      const classname = '.jfp3ef'
+      let elements = dom.window.document.querySelectorAll(classname);
+      
+      //extract just the URL
+      let urls = [];
+      for (let element of elements){
+          try{
+              //get the Href component
+              let url = element.getElementsByTagName('a')[0].href;
+              url = url.substring(7,url.indexOf("&sa"));
+              urls.push(url);
+          }catch(e){}
+      } 
+      resolve(urls);
+  });
+}
+exports.getURLS=getURLS;
