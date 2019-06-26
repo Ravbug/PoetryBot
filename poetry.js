@@ -59,7 +59,7 @@ async function poem(url,startword,max_tries=10){
         if (line == ""){break;};
         poem.push(['*',line,'*'].join(''));
         poem.push('\n');
-        prevLine = line.split(' ');
+        prevLine = prevLine.concat(line.split(' '));
         startword = util.randomElement(prevLine);
     }
     //join the poem array, and replace duplicate newlines with a single newline
