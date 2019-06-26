@@ -8,7 +8,6 @@ const util = require('./util.js');
 const functions = {
     "ping":{f:ping},"restart":{f:restart,level:2},
     "stats":{f:stats}, "help":{f:help}, "":{f:help},
-    "about":{f:about},
     "invite":{f:invite},
     "poem":{f:poem},"purgecaches":{f:purgecaches,level:2}
 }
@@ -133,13 +132,6 @@ function restart(message){
 }
 
 /**
- * @returns A string and a URL to the bot's webpage
- */
-function about(){
-  return "Visit this URL to get information about the bot: https://poetrybot.glitch.me/";
-}
-
-/**
  * Update the &permissions query flag to add or remove permissions
  * @returns A URL to the bot, with suggested permissions
  */
@@ -147,6 +139,9 @@ function invite(){
   return "Invite link: https://discordapp.com/oauth2/authorize?client_id=" + bot.client.user.id + "&scope=bot&permissions=68608"
 }
 
+/**
+ * Sends a help embed with the commands list
+ */
 function help(){
   const embed = new discord.RichEmbed()
     .setTitle(bot.client.user.username + " Commands")
@@ -160,6 +155,7 @@ function help(){
     .addField("about","Get info about the bot",true)
     .addField("ping","Get the bot's API ping.",true)
     .addField("stats","Get bot statistics",true)
+    .setFooter("Visit https://poetrybot.glitch.me/ for more information");
     return embed;
 }
 

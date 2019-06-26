@@ -8,51 +8,75 @@
 <!-- hbs(handlebars): http://handlebarsjs.com/ -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <title>Welcome to Glitch!</title>
-    <meta name="description" content="A cool thing made with Glitch">
-    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <title>Poetrybot Info</title>
+    <meta name="description" content="An automatic responder bot, user-programmable to say things on different conditions. See the bot's help command for more info.">
+    <link id="favicon" rel="icon" href="https://cdn.discordapp.com/avatars/409947148172394498/7ff43b27f39a267fc9f658cbdf99775f.png" type="image/x-icon">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/style.css">
-    
-    <!-- import the webpage's client-side javascript file -->
-    <script src="/client.js" defer></script>
   </head>
-  <body>
-    <header>
-      <h1>
-        A Dream of the Future
-      </h1>
-    </header>
+  <table style="width:100%">
+    <!-- The header -->
+      <tr>
+        <th><img style="width:75px;height:75px;margin:15px" src="https://cdn.discordapp.com/avatars/374793801455108097/34cd9178a4f93f3dfb14fa55a0f3f74f.png"></img>
+      </th>
+        <th style="width:100%"><h1 style="text-align:left">PoetryBot</h1>   
+            <a href="/">About</a>
+            <a href="/#commands">Commands</a>
+            <a href="/#service">Service</a>
+            <a href="https://discordapp.com/oauth2/authorize?client_id=592779132233056277&scope=bot&permissions=68608">Invite!</a> 
+        </th>
+      </tr>
+    </table>
+  <article>
+    
+    A poetry writing bot! It reads websites, learns how to write based on those websites, and then uses that knowledge to generate unique poems!<br>
+    See below for how to use it, and use the invite menu to invite it to your server.
+    
+    <!-- Commands list -->
+    <h2>
+      <u id="commands">Commands</u>
+    </h2>
+      <p>Tag me in your command when not in a DM.</p>
+      <h4> poem [url]</h4>
+      <p>Generate a unique poem based on the text on a webpage.
+      Urban Dictionary pages or websites with lots of text work well for this.
+      Example: <code>poem https://wikipedia.org/wiki/Discord_(software)</code></p>
 
-    <main>
-      <p class="bold">Oh hi,</p>
-      
-      <p>Tell me your hopes and dreams:</p>
-      
-      <form>
-        <input name="dream" type="text" maxlength="100" placeholder="Dreams!" aria-labelledby="submit-dream">
-        <button type="submit" id="submit-dream">Submit Dream</button>
-      </form>
-      
-      <section class="dreams">
-        <ul id="dreams"></ul>
-      </section>
-    </main>
+      <h4> invite </h4>
+      <p>Get an invite link to invite me to your server</p>
 
-    <footer>
-      Made with <a href="https://glitch.com">Glitch</a>!
-    </footer>
+      <h4> help </h4>
+      <p>Show this list of commands in the chat.</p>
 
-    <!-- include the Glitch button to show what the webpage is about and
-          to make it easier for folks to view source and remix -->
-    <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
-    <script src="https://button.glitch.me/button.js"></script>
+      <h4> ping </h4>
+      <p>Get the bot's API latency.</p>
 
-  </body>
+      <h4> stats </h4>
+      <p>Get bot statistics</p
+
+    
+    <!-- Bot vitals -->
+    <h2>
+      <u id="service">Service Status</u>
+    </h2>
+    <p id="status">
+      Loading...
+    </p>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+            crossorigin="anonymous"></script>
+    <script src="/client.js"></script>
+
+  </article>
+<footer>
+  Created by <a href="https://twitter.com/ravbug">Ravbug</a>
+  
+  Click <a href="https://discordapp.com/oauth2/authorize?client_id=592779132233056277&scope=bot&permissions=68608">this link</a> to add AutoResponder to your server
+</footer>
 </html>
