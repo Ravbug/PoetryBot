@@ -151,6 +151,7 @@ function help(){
     .setThumbnail((bot.client.user.avatarURL !=undefined)? bot.client.user.avatarURL : bot.client.user.defaultAvatarURL)
     .setTimestamp()
     .addField("poem [url]","Generate a unique poem based on the text on a webpage.\nUrban Dictionary pages or websites with lots of text work well for this.",true)
+    .addField("poemsearch [space separated keywords]","Searches Google for keywords, selects a URL, and then generates a poem based on that URL.",true)
     .addField("invite","Get an invite link for the bot.",true)
     .addField("help","Display this information",true)
     .addField("about","Get info about the bot",true)
@@ -196,17 +197,40 @@ let searchQueue = new Set();
  * @param {string[]} content [0] = webpage url 
  */
 async function poemsearch(message,content){
+  //check if they have a job queued
   if (poemQueue.has(message.author.id) || searchQueue.has(message.author.id)){
     message.react("❌");
     return ["<@",message.author.id,"> You must wait for your previous request to complete."].join('');
   }
+  //load and parse the google search results
   message.react('🔍');
   searchQueue.add(message.author.id);
   let urls = await util.getURLS(content.join(' '));
-  let url = util.randomElement(urls);
-  let text = await poem(message,[url]);
+  //while there are URLs
+  message.react("⏳");
+  while (urls.length > 0){
+    let id = util.getRandom(0,urls.length);
+    let url = util.randomElement(urls);
+    //try to make a poem from each URL
+    try{
+      let text = await util.asyncTimeout(10000,poetry.poem(url));
+      if (text.length < 10){
+        urls.splice(id,1);
+        continue;
+      }
+      searchQueue.delete(message.author.id);
+      message.react("✅");
+      return [text,"\n\nRequested by <@",message.author.id,">, using <",url,">, found using keywords `",content,"`"].join('');
+    }
+    catch(e){
+      //remove that URL and try again
+      urls.splice(id,1);
+    }
+
+  }
+  message.react("❌");
   searchQueue.delete(message.author.id);
-  return text;
+  return [":x: <@",message.author.id,"> Unable to generate poem using keywords `", content,"`. Check your spelling or try different keywords"].join('');
 }
 
 /**
