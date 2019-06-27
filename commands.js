@@ -137,7 +137,7 @@ function restart(message){
  * @returns A URL to the bot, with suggested permissions
  */
 function invite(){
-  return "Invite link: https://discordapp.com/oauth2/authorize?client_id=" + bot.client.user.id + "&scope=bot&permissions=68608"
+  return "Invite link: https://discordapp.com/oauth2/authorize?client_id=" + bot.client.user.id + "&scope=bot&permissions=68672"
 }
 
 /**
@@ -194,7 +194,7 @@ let searchQueue = new Set();
 /**
  * Generates a poem with a given url
  * @param {discord.Message} message Caller's message object
- * @param {string[]} content [0] = webpage url 
+ * @param {string[]} content array of search keywords
  */
 async function poemsearch(message,content){
   //check if they have a job queued
@@ -214,7 +214,7 @@ async function poemsearch(message,content){
     //try to make a poem from each URL
     try{
       let text = await util.asyncTimeout(10000,poetry.poem(url));
-      if (text.length < 10){
+      if (text.length < 30){
         urls.splice(id,1);
         continue;
       }
@@ -228,6 +228,7 @@ async function poemsearch(message,content){
     }
 
   }
+  //failure case
   message.react("❌");
   searchQueue.delete(message.author.id);
   return [":x: <@",message.author.id,"> Unable to generate poem using keywords `", content,"`. Check your spelling or try different keywords"].join('');
