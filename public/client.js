@@ -2,7 +2,7 @@
 // run by the browser each time view template loads
 
 function getStatus(){
-  httpGetAsync("http://"+window.location.host+"/status",
+  httpGetAsync(location.protocol + "//"+window.location.host+"/status",
   function(data){
     data = JSON.parse(data);
     var status = document.getElementById("status");
