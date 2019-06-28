@@ -26,7 +26,8 @@ You can use this bot two ways:
   "CREATOR_ID":"your user ID here"
 }
 ```
-3. run `node server.js` to start the bot and the webserver. In the console the bot will print the webserver's port. In your web browser, navigate to `localhost://PORT_HERE` to see the webpage.
+3. run `npm install` to install dependencies.
+4. run `node server.js` to start the bot and the webserver. In the console the bot will print the webserver's port. In your web browser, navigate to `localhost://PORT_HERE` to see the webpage.
 
 ## Wow, this poem sucks!
 Run the commands a few times! Not all websites are favorable for the algorithm, and sometimes the bot chooses a bad starting word on good websites. The bot caches where it can so subsequent runs should be faster.
