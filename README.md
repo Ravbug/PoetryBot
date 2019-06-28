@@ -1,6 +1,8 @@
 # PoetryBot
 A poetry writing bot! It reads websites, learns how to write based on those websites, and then uses that knowledge to generate unique poems! I created this bot for the June 2019 Discord Hack Week. 
 
+![image of a poem](https://i.imgur.com/hZLFafM.png)
+
 Visit the bot's website for a commands and features list: [https://poetrybot.glitch.me](https://poetrybot.glitch.me)
 
 ## How it works
@@ -27,4 +29,4 @@ You can use this bot two ways:
 3. run `node server.js` to start the bot and the webserver. In the console the bot will print the webserver's port. In your web browser, navigate to `localhost://PORT_HERE` to see the webpage.
 
 ## Wow, this poem sucks!
-Run the commands a few times! Not all websites are favorable for the algorithm. The bot caches where it can so subsequent runs should be faster.
+Run the commands a few times! Not all websites are favorable for the algorithm, and sometimes the bot chooses a bad starting word on good websites. The bot caches where it can so subsequent runs should be faster.
