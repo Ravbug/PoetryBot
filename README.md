@@ -1,5 +1,7 @@
 # PoetryBot
-A poetry writing bot! It reads websites, learns how to write based on those websites, and then uses that knowledge to generate unique poems! I created this bot for the June 2019 Discord Hack Week. Visit the bot's website here: [https://poetrybot.glitch.me](https://poetrybot.glitch.me)
+A poetry writing bot! It reads websites, learns how to write based on those websites, and then uses that knowledge to generate unique poems! I created this bot for the June 2019 Discord Hack Week. 
+
+Visit the bot's website for a commands and features list: [https://poetrybot.glitch.me](https://poetrybot.glitch.me)
 
 ## How it works
 The gist of PoetryBot's algorithm:
