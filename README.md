@@ -15,7 +15,7 @@ The gist of PoetryBot's algorithm:
 ## Ok, but how can I play with it?
 You can use this bot two ways:
 1. Run the bot locally on your computer (information about how to do that below)
-2. [Invite the version I'm hosting, by clicking here:](https://discordapp.com/oauth2/authorize?client_id=592779132233056277&scope=bot&permissions=68608)
+2. [Invite the version I'm hosting, by clicking here:](https://discordapp.com/oauth2/authorize?client_id=592779132233056277&scope=bot&permissions=68672)
 
 ## How do I host this on my computer locally?
 1. Download this repository as a zip (or clone with a shallow depth)
