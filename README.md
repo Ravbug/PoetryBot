@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-Invite link:
-https://discordapp.com/oauth2/authorize?client_id=592779132233056277&scope=bot&permissions=68608
-=======
 # PoetryBot
 A poetry writing bot! It reads websites, learns how to write based on those websites, and then uses that knowledge to generate unique poems! I created this bot for the June 2019 Discord Hack Week. 
 
@@ -59,4 +55,3 @@ you would copy `kCrYT` to your clipboard.
 11. Run another `poemsearch` query. Make sure that the resulting HTMLCollection on the breakpoint has elements.
 12. Using the debugger, step to ensure `url` contains a correct URL.
 13. Submit a pull request or open an Issue. Only open an Issue if you have completed the above!
->>>>>>> test
