@@ -31,3 +31,25 @@ You can use this bot two ways:
 
 ## Wow, this poem sucks!
 Run the commands a few times! Not all websites are favorable for the algorithm, and sometimes the bot chooses a bad starting word on good websites. The bot caches where it can so subsequent runs should be faster.
+
+## The ``poemsearch`` command doesn't work!
+If the poemsearch command is failing, perform the following:
+1. Follow the local hosting instructions
+2. Set a breakpoint in the `resolve()` call inside the `urlToDOM()` function in `util.js`
+3. Run the bot with a debugger attached. Have it run `poemsearch`. The breakpoint will trigger.
+4. Use the debugger to get the contents of `data`. Copy all of it to your clipboard.
+5. Paste into [CodeVisualizer](https://ravbug.github.io/codevisualizer). The render view should populate with the google search results page in your clipboard.
+6. In CodeVisualizer, use your browser's find and replace to locate a link. Make sure you are clicked inside the code view.
+7. Find the CSS class name of the a containing element to the anchor tag. For example, if the find-replace found
+```html
+...
+<div class="kCrYT"><a href="/url?q=https://www.merriam-webster.com/dictionary"></a>
+...
+```
+you would copy `kCrYT` to your clipboard. 
+8. Scroll to `getUrls()` in `util.js`. Replace the assignment to `classname` with the value you just copied.
+9. Restart the bot in the debugger. 
+10. Set a breakpoint under the `getElementsByClassName()` call to ensure that this class query is working. 
+11. Run another `poemsearch` query. Make sure that the resulting HTMLCollection on the breakpoint has elements.
+12. Using the debugger, step to ensure `url` contains a correct URL.
+13. Submit a pull request or open an Issue. Only open an Issue if you have completed the above!
