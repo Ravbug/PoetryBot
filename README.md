@@ -41,12 +41,14 @@ If the poemsearch command is failing, perform the following:
 5. Paste into [CodeVisualizer](https://ravbug.github.io/codevisualizer). The render view should populate with the google search results page in your clipboard.
 6. In CodeVisualizer, use your browser's find and replace to locate a link. Make sure you are clicked inside the code view.
 7. Find the CSS class name of the a containing element to the anchor tag. For example, if the find-replace found
+
 ```html
 ...
 <div class="kCrYT"><a href="/url?q=https://www.merriam-webster.com/dictionary"></a>
 ...
 ```
 you would copy `kCrYT` to your clipboard. 
+
 8. Scroll to `getUrls()` in `util.js`. Replace the assignment to `classname` with the value you just copied.
 9. Restart the bot in the debugger. 
 10. Set a breakpoint under the `getElementsByClassName()` call to ensure that this class query is working. 
