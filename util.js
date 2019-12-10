@@ -156,8 +156,13 @@ function getURLS(question){
       const url = "https://google.com/search?q="+question;
       let dom = await urlToDOM(url);       
       //get the green <a> elements displayed on the page
+<<<<<<< HEAD
       const classname = '.jfp3ef'
       let elements = dom.window.document.querySelectorAll(classname);
+=======
+      const classname = 'kCrYT'
+      let elements = dom.window.document.getElementsByClassName(classname)
+>>>>>>> test
       
       //extract just the URL
       let urls = [];
