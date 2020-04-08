@@ -1,9 +1,32 @@
 # PoetryBot
-A poetry writing bot! It reads websites, learns how to write based on those websites, and then uses that knowledge to generate unique poems! I created this bot for the June 2019 Discord Hack Week. 
+A poetry writing bot! It reads websites, learns how to write based on those websites, and then uses that knowledge to generate unique poems! I created this bot for the June 2019 Discord Hack Week. I am no longer hosting this bot, so see below if you wish to run this bot.
 
 ![image of a poem](https://i.imgur.com/hZLFafM.png)
 
-Visit the bot's website for a commands and features list: [https://poetrybot.glitch.me](https://poetrybot.glitch.me)
+## Bot Commands
+`poem [url]`
+
+Generate a unique poem based on the text on a webpage. Urban Dictionary pages or websites with lots of text work well for this. Example: `poem https://wikipedia.org/wiki/Discord_(software)`
+
+`poemsearch [space separated keywords]`
+
+Searches Google for keywords, selects a URL, and then generates a poem based on that URL. Example: `poemsearch discord hack week`
+
+`invite`
+
+Get an invite link to invite me to your server
+
+`help`
+
+Show this list of commands in the chat.
+
+`ping`
+
+Get the bot's API latency.
+
+`stats`
+
+Get bot statistics
 
 ## How it works
 The gist of PoetryBot's algorithm:
@@ -15,7 +38,7 @@ The gist of PoetryBot's algorithm:
 ## Ok, but how can I play with it?
 You can use this bot two ways:
 1. Run the bot locally on your computer (information about how to do that below)
-2. [Invite the version I'm hosting, by clicking here:](https://discordapp.com/oauth2/authorize?client_id=592779132233056277&scope=bot&permissions=68672)
+2. ~~[Invite the version I'm hosting, by clicking here.](https://discordapp.com/oauth2/authorize?client_id=592779132233056277&scope=bot&permissions=68672)~~ Hosted version has been shut down.
 
 ## How do I host this on my computer locally?
 1. Download this repository as a zip (or clone with a shallow depth)
